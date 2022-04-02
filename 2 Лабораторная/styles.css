@@ -1,0 +1,117 @@
+body {
+	background-color: #2670c9;
+	font-family: Montserrat, sans-serif;
+	font-size: 16px;
+}
+
+header {
+	margin: 0 0 50px 0;
+	font-size: 35px;
+	line-height: 60px;
+	text-align: center;
+	border-bottom: 4px solid white;
+	color: white;
+}
+
+.row {
+	display: flex;
+}
+
+.column {
+	width: 50%;
+}
+
+.column:not(:last-child) {
+	margin-right: 20px;
+}
+
+.panel-wrapper {
+	height: 100%;
+}
+
+#grid-view {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-gap: 20px;
+}
+
+.panel-item {
+	padding: 20px 25px;
+	display: flex;
+	flex-direction: column; /*сверху вниз*/
+	background-color: white;
+	border-radius: 5px;
+	justify-content: center;
+}
+
+.selection__effect:hover {
+	background-color: blue;
+	cursor: pointer;
+}
+
+.selection__effect:hover span {
+	color: #FFFFFF !important;
+}
+
+.panel-title {
+	margin: 24px 0;
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 30px;
+	text-align: center;
+	color: white;
+}
+
+.team_title {
+	font-size: 30px;
+	color: black;
+	font-weight: bold;
+	text-align: center;
+}
+
+.team_description {
+	text-align: center;
+	vertical-align: bottom;
+}
+
+#win_template {
+	color: green;
+}
+
+#lose_template {
+	color: red;
+}
+
+ul > li > div {
+	display: flex;
+	justify-content: space-between;
+	line-height: 40px;
+	border-bottom: 2px solid #2670c9;
+}
+
+.stat-player__nickname {
+	color: #2670c9;
+}
+
+.stat-player__info {
+	color: black;
+	font-weight: bold;
+}
+
+#open-steam {
+	width: 250px;
+	margin: 30px auto;
+	background-color: black;
+	color: #FFF;
+	border: none;
+	border-radius: 6px;
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+	line-height: 50px;
+}
+
+#open-steam:hover {
+	cursor: pointer;
+	background-color: blue;
+}

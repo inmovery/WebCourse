@@ -1,0 +1,64 @@
+.section-header {
+  margin-bottom: 50px;
+}
+
+.section-header .section-title {
+  font-size: 38px;
+  color: black;
+  position: relative;
+  padding-bottom: 20px;
+  margin: 0 0 20px;
+}
+
+.section-header .section-title:before {
+  content: "";
+  position: absolute;
+  width: 140px;
+  bottom: 0;
+  left: 50%;
+  margin-left: -70px;
+  height: 4px;
+  background: black;
+}
+
+#features {
+  padding: 100px 0;
+  background: black;
+}
+
+#features .media.service-box:first-child {
+  margin-top: 80px;
+}
+
+#services {
+  padding: 100px 0 75px;
+  background: black;
+}
+
+.media.service-box {
+  margin: 25px 0 36px;
+}
+
+.media.service-box .pull-left {
+  margin-right: 20px;
+}
+
+.media.service-box .pull-left > i {
+  font-size: 28px;
+  height: 67px;
+  line-height: 64px;
+  text-align: center;
+  width: 80px;
+  color: black;
+  border: blue 2px solid;
+  transition: background-color 400ms, background-color 400ms;
+  position: relative;
+  height: 80px;
+  line-height: 80px;
+}
+ 
+.media.service-box:hover .pull-left > i {
+  color: black;
+  background: skyblue;
+  cursor: pointer;
+}

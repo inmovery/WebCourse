@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style>
+		.list > div {
+			display: list-item;
+			list-style-type: disc;
+			list-style-position: inside;
+			margin-left: 2em;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+
+		const assignDepth = (arr, depth = 0, index = 0) => {
+			if(index < arr.length){
+		    	arr[index].depth = depth;
+		    	console.log(arr[index].child);
+		    	if(arr[index].child?.length){
+		        	return assignDepth(arr[index].child, depth + 1, 0);
+		    	};
+		    	return assignDepth(arr, depth, index + 1);
+		    };
+		    return;
+		};
+
+		ar1 =
+		[
+			{
+				name: "Дачи Ручеек",
+				child:
+				[
+					{
+						name: "правление",
+						child:
+						[
+							{ name: "кассир" },
+							{ name: "председатель" }
+						]
+					},
+					{
+						name: "улицы",
+						child:
+						[
+							{ name: "первая" },
+							{ name: "вторая" },
+							{ name: "третья" },
+							{ name: "четвертая" },
+							{ name: "узкая" }
+						]
+					}
+				]
+			}
+		];
+
+		assignDepth(ar1);
+
+		console.log(JSON.stringify(ar1, undefined, 4));
+
+		get_array_content = (array) => {
+			var result = "";
+
+			array
+			.filter((item) => {
+				return item.depth != 2;
+			})
+			.map((item) => {
+				let child = "";
+				if (Array.isArray(item.child))
+					child = get_array_content(item.child);
+
+				result += "<div>" + item.name + child + "</div>";
+			});
+
+			result = "<div class=\"list\">" + result + "</div>";
+
+			return result;
+		};
+
+		var html_content = get_array_content(ar1);
+
+		console.log(html_content);
+		document.write(html_content);
+	</script>
+</body>
+</html>

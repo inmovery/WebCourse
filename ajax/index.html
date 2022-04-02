@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div id="container" class="col-md-6 offset-md-3">
+        <div class="container mt-3">
+            <div class="row mb-3">
+                <h2>Search Database</h2>
+                <input class="form-control" type="text" name="seach" id="search_id" placeholder="Search Inventory">
+                <br>
+                <br>
+                <h2 class="bg-success" id="result"></h2>
+            </div>
+            <div class="row mb-3">
+                <form method="POST" action="add_cars.php" id="add_car_form">
+                    <div class="form-group">
+                        <label for="car_name">Add a car</label>
+                        <input class="form-control" type="text" name="car_name" id="car_name" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary"> Add car </button>
+                    </div>
+                </form>
+
+                <div class="col-md-6">
+                    <div id="car_result"></div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Car id</th>
+                                <th>Car name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="show-cars">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <p id='feedback' class="bg-success"></p>
+                    <div id="action-container">
+                        HELLO
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" ></script>
+
+
+    <script>
+		//иницализируем документ
+        $(document).ready(function () {
+			//строка поиска, событие отпускания клавиши вверх отправляем запрос POST
+            $('#search_id').keyup(function () {
+				//достаём из поля с id='isearch_id' в теге input в html значение введеное пользователем
+                let search = $('#search_id').val();
+
+				//выполняем запрос в БД POST с параметром search в теле, не в заголовке
+                $.ajax({
+                    url: 'search.php',
+                    data: {
+                        search: search
+                    },
+                    type: 'POST',
+                    success: function (data) {
+                        if (!data.error) {
+							//модифицируем элемент DOM если ошибка
+                            $('#result').html(data);
+                        }
+                    }
+                });
+            })
+
+			//цепляемся к form с id='add_car_form' на добавление с action->post
+			//submit -> нажатие кнопки
+            //add cars to database
+            $('#add_car_form').submit(function (evt) {
+                evt.preventDefault();
+                let postData = $(this).serialize();
+                let url = $(this).attr('action');
+
+                $.post(url, postData, function (php_table_data) {
+					//после выполнения запроса добавляем в таблицу строку с данными и сбрасываем текст добавления
+                    $("#car_result").html(php_table_data);
+                    $('#add_car_form')[0].reset();
+                    //$('#car_name').val("");
+                });
+            }); //add car end
+
+			//в фоне обновляем страницу раз в 1 секунд, и при добавлении элемента он будет виден сразу
+			//без перезагрузки страницы
+            setInterval(function () {
+                updateCars();
+            }, 1000); //updates the list of cars every 1 second
+
+            //update cars
+            function updateCars() {
+                $.ajax({
+                    url: 'display_cars.php',
+                    type: 'POST',
+                    success: function (show_cars) {
+                        if (!show_cars.error) {
+                            $('#show-cars').html(show_cars);
+                        }
+                    }
+                });
+            } //update car ends
+
+        }); //document ready end
+    </script>
+</body>
+</html>
